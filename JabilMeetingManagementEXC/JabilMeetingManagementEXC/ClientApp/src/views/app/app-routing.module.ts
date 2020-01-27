@@ -11,6 +11,15 @@ const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: '',
+    children: [
+      {
+        path: 'meetings',
+        loadChildren: () => import('../meeting/meeting.module').then(m => m.MeetingModule)
+      }
+    ]
   }
 
 ];

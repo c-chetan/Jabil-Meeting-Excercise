@@ -3,14 +3,14 @@
   <div class="col-sm-12 loginContainer">
     <div class="row">
       <div class="col-sm-12">
-        <form #loginForm="ngForm">
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
           <div class="col-sm-12">
             <label for="usrName">Username : </label>
-            <input type="text" #userName name="usrName" class="form-control" />
+            <input type="text" #userName name="usrName" ngModel class="form-control" />
           </div>
           <div class="col-sm-12">
             <label for="passw">Password : </label>
-            <input type="password" #password name="passw" class="form-control" />
+            <input type="password" #password name="passw" ngModel class="form-control" />
           </div>
           <div class="col-sm-6">
             <button type="submit">Login</button>
