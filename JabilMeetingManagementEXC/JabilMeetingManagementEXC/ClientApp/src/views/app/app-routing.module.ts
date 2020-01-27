@@ -13,11 +13,15 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: '',
+    path: 'meetings',
     children: [
       {
-        path: 'meetings',
+        path: 'meetings-list',
         loadChildren: () => import('../meeting/meeting.module').then(m => m.MeetingModule)
+      },
+      {
+        path: 'add-meeting',
+        loadChildren: () => import('../meeting/create-meeting/create-meeting.module').then(m => m.CreateMeetingModule)
       }
     ]
   }

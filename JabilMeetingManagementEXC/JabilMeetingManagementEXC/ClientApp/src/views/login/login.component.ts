@@ -29,9 +29,8 @@ export class LoginComponent implements OnInit {
     this.user.password = user.passw;
     this.authenticateUser$ = this.userService.authUser(this.user).subscribe(response => {
       if (response) {
-        debugger;
         console.log(response);
-        this.router.navigate(['/meetings']);
+        this.router.navigate(['/meetings/meetings-list']);
       }
     });
   }

@@ -6,14 +6,14 @@ import { CreateMeetingComponent } from './create-meeting.component';
 const routes: Routes = [
   {
     path: '',
-    component: CreateMeetingComponent,
+    component: CreateMeetingComponent
   }
   ]
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule.forChild(routes)
   ],
   exports: [
     RouterModule
