@@ -31,5 +31,9 @@ namespace MeetingAppDataLayer.DBContext
         public MeetDBContext(DbContextOptions<MeetDBContext> options): base(options) { }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Meeting> Meetings { get; set; }
+
+        public DbSet<Attendee> Attendees { get; set; }
     }
 }

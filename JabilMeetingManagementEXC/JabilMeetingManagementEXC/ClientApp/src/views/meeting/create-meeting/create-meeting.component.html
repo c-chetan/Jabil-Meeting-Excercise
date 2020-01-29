@@ -1,11 +1,40 @@
-<p>create-meeting works!</p>
-
 <div class="container">
   <div class="col-sm-12">
     <div class="row">
-      <!--<form #addMeetingForm="ngForm">
-        <input type="text" class="form-control" />
-      </form>-->
+      <div class="col-sm-12">
+        <form #addMeetingForm="ngForm">
+          <div class="col-sm-6">
+            <label for="meetingSubject">Subject: </label>
+            <input type="text" class="form-control" name="meetingSubject" maxlength="50" />
+          </div>
+          <div class="col-sm-6">
+            <label> Attendes: </label>
+            <div class="col-sm-6">
+              <angular2-multiselect name="attendeesDropdown" [data]="itemList"
+                                    [(ngModel)]="selectedItems"
+                                    [settings]="settings">
+
+              </angular2-multiselect>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <textarea class="form-control" placeholder="Agenda of Meeting"></textarea>
+          </div>
+          <div class="col-sm-6">
+            <label for="meetingDate">Select Date</label>
+            <p-calendar name="meetingDate" [(ngModel)]="meetingDate"></p-calendar>
+
+          </div>
+          <div class="col-sm-6">
+            <button type="submit" class="btn btn-success">Add</button>
+            <button type="button" class="btn btn-warning">Clear</button>
+          </div>
+        </form>
+        <div class="col-sm-6">
+          <button type="button" class="btn btn-danger" routerLink="/meetings/meetings-list"> Close</button>
+        </div>
+      </div>
+      <div class="col-sm-6"></div>
     </div>
   </div>
 </div>

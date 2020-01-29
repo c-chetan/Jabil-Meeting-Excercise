@@ -15,6 +15,7 @@
           <div class="col-sm-6">
             <button type="submit">Login</button>
           </div>
+          <p style="color:red" *ngIf="!authenticatedUser"> Login Failed</p>
         </form>
       </div>
     </div>
