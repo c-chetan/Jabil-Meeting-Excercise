@@ -19,10 +19,10 @@ namespace MeetingAppDataLayer.Models
         [Required]
         public bool IsMeetingOwner { get; set; }
 
-        [ForeignKey("FK_UserAttendeeId")]
+        [ForeignKey("UserAttendeeId")]
         public User User { get; set; }
 
-        [ForeignKey("FK_MeetingAttendeeId")]
+        [ForeignKey("MeetingAttendeeId")]
         public Meeting Meeting { get; set; }
     }
 }
