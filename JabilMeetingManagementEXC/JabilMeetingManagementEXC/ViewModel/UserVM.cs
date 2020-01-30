@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace JabilMeetingManagementEXC.ViewModel
 {
-    public class UserViewModel
+    public class UserVM
     {
         public int UserId { get; set; }
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MeetingAppDataLayer.DAO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,12 +13,19 @@ namespace JabilMeetingManagementEXC.ApiControllers
     {
         
         [HttpGet]
-        [Route("meetings-list/{id}")]
-        public IActionResult GetMeetings(int UserId)
+        [Route("meetings-list/{UserId}")]
+        public IActionResult GetUserMeetings(int UserId)
         {
             if(UserId!=0)
             {
+                MeetingDAO meetingDAO = new MeetingDAO();
+                var attendeMeetings = meetingDAO.GetMeetingsList(UserId);
 
+                return Ok(attendeMeetings);
+            }
+            else
+            {
+                return BadRequest();
             }
         }
     }

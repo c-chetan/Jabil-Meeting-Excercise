@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MeetingAppDataLayer.Models
 {
@@ -15,13 +13,13 @@ namespace MeetingAppDataLayer.Models
 
         [Required]
         [MaxLength(50)]
-        public string MeetingSubject { get; set; }
+        public string Subject { get; set; }
 
         [Required]
-        public string MeetingAgenda { get; set; }
+        public string Agenda { get; set; }
 
         [Required]
-        public DateTime MeetingDate { get; set; }
+        public DateTime Date { get; set; }
 
         [Required]
         public IEnumerable<Attendee> Attendees { get; set; }

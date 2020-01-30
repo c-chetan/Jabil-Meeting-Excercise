@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Linq.Expressions;
 using MeetingAppDataLayer.Models;
 using MeetingAppDataLayer.DBContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingAppDataLayer.DAO
 {
@@ -16,24 +18,27 @@ namespace MeetingAppDataLayer.DAO
             appSettings = new AppSettings();
         }
 
-        public IEnumerable<Meeting> GetMeetingsList(int Id)
+        public IEnumerable<Attendee> GetMeetingsList(int Id)
         {
             if(Id!=0)
             {
                 using(MeetDBContext dBContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
                 {
-                    var attendee = dBContext.Set<Attendee>()
-                                                    .Where(x => x.User.UserId == Id).FirstOrDefault();
 
-                    var attendeeMeetings = dBContext.Set<Meeting>()
-                                                    .Where(x => x.MeetingId == attendee.Meeting.MeetingId).ToList();
-                    return attendeeMeetings;
+                    var userMeetings = dBContext.Attendees
+                                        .Include(a => a.Meeting)
+                                        .Include(m => m.Meeting.Attendees)
+                                        .Where(x => x.User.UserId == Id)
+                                        .ToList();
+
+                    return userMeetings;
                 }
             }
             else
             {
-                return new List<Meeting>();
+                return new List<Attendee>();
             }
         }
+        
     }
 }

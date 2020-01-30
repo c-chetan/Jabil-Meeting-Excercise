@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using MeetingAppDataLayer.Models;
-using JabilMeetingManagementEXC.ViewModel;
 using MeetingAppDataLayer.DAO;
 using AutoMapper;
 

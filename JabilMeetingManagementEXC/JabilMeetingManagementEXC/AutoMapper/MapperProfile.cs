@@ -13,7 +13,7 @@ namespace JabilMeetingManagementEXC.AutoMapper
 
         public MapperProfile()
         {
-            CreateMap<User, UserViewModel>();
+            CreateMap<User, UserVM>();
         }
     }
 }

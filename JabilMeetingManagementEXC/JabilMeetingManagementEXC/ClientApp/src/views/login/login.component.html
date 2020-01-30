@@ -15,8 +15,9 @@
           <div class="col-sm-6">
             <button type="submit" class="btn btn-primary">Login</button>
           </div>
-          <p style="color:red" *ngIf="!authenticatedUser"> Login Failed</p>
+          <p style="color:red" *ngIf="!authenticatedUser">Login Failed</p>
         </form>
+        <button type="button" class="btn btn-warning" routerLink="/user">SignUp</button>
       </div>
     </div>
   </div>

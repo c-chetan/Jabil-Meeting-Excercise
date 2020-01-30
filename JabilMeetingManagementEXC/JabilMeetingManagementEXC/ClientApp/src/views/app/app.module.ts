@@ -9,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 //Import Components
 import { AppComponent } from './app.component';
-import { importType } from '@angular/compiler/src/output/output_ast';
 
 @NgModule({
   declarations: [
