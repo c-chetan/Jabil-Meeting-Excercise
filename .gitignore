@@ -13,3 +13,5 @@ lMeetingManagementEXC/JabilMeetingManagementEXC/bin/Debug/netcoreapp2.1/Razor/Pa
 /JabilMeetingManagementEXC/.vs/config
 /JabilMeetingManagementEXC/ClientApp/package-lock.json
 /JabilMeetingManagementEXC/package-lock.json
+/JabilMeetingManagementEXC/MeetingAppBL/bin/Debug/netcoreapp2.1
+/JabilMeetingManagementEXC/MeetingAppBL/obj

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using MeetingAppDataLayer.Models;
-using MeetingAppDataLayer.DAO;
+using MeetingAppBL.DAO;
 using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

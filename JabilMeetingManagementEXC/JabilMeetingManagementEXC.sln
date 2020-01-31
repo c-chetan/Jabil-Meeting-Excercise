@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JabilMeetingManagementEXC", "JabilMeetingManagementEXC\JabilMeetingManagementEXC.csproj", "{3FEC44BA-DA34-4085-81FD-56CC3585CD66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JabilMeetingManagementEXC", "JabilMeetingManagementEXC\JabilMeetingManagementEXC.csproj", "{3FEC44BA-DA34-4085-81FD-56CC3585CD66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetingAppDataLayer", "MeetingAppDataLayer\MeetingAppDataLayer.csproj", "{8A180EB2-0D62-4C7A-B478-BB690617FE87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeetingAppDataLayer", "MeetingAppDataLayer\MeetingAppDataLayer.csproj", "{8A180EB2-0D62-4C7A-B478-BB690617FE87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetingAppBL", "MeetingAppBL\MeetingAppBL.csproj", "{644DF594-D7F0-4315-8864-C8A58CA15C67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{8A180EB2-0D62-4C7A-B478-BB690617FE87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A180EB2-0D62-4C7A-B478-BB690617FE87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A180EB2-0D62-4C7A-B478-BB690617FE87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{644DF594-D7F0-4315-8864-C8A58CA15C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{644DF594-D7F0-4315-8864-C8A58CA15C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{644DF594-D7F0-4315-8864-C8A58CA15C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{644DF594-D7F0-4315-8864-C8A58CA15C67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

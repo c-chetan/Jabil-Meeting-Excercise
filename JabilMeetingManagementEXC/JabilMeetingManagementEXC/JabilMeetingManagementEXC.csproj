@@ -31,12 +31,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MeetingAppDataLayer\MeetingAppDataLayer.csproj" />
+    <Folder Include="ClientApp\src\services\" />
+    <Folder Include="ClientApp\src\views\meeting\create-meeting\" />
+    <Folder Include="ClientApp\src\views\user\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\services\" />
-    <Folder Include="ClientApp\src\views\meeting\create-meeting\" />
+    <ProjectReference Include="..\MeetingAppBL\MeetingAppBL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
