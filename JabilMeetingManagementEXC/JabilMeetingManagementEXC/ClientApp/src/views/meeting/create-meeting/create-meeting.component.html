@@ -2,27 +2,41 @@
   <div class="col-sm-12">
     <div class="row">
       <div class="col-sm-12">
-        <form #addMeetingForm="ngForm">
+        <form #addMeetingForm="ngForm" (ngSubmit)="saveMeeting()">
           <div class="col-sm-6">
             <label for="meetingSubject">Subject: </label>
-            <input type="text" class="form-control" name="meetingSubject" maxlength="50" />
+            <input type="text" class="form-control" name="meetingSubject" maxlength="50" [(ngModel)]="meeting.subject"/>
           </div>
           <div class="col-sm-6">
             <label> Attendes: </label>
-            <div class="col-sm-6">
-              <angular2-multiselect name="attendeesDropdown" [data]="itemList"
-                                    [(ngModel)]="selectedItems"
-                                    [settings]="settings">
+            <div class="col-sm-6"  *ngIf="attendees!=null">
+              <angular2-multiselect name="attendeesDropdown" [(data)]="attendees"
+                                    [(ngModel)]="selectedAttendees"
+                                    [settings]="settings"
+
+                                    (onSelect)="onItemSelect($event)"
+                                    (onDeSelect)="OnItemDeSelect($event)">
+
+                <c-item>
+                  <ng-template let-item="item">
+                    <!--*ngFor="let attendee of attendees"-->
+                    <label style="color: #333;min-width: 150px;">{{item.userName}}</label>
+                  </ng-template>
+                </c-item>
 
               </angular2-multiselect>
+
+              <!--<select>
+                <option *ngFor="let attendee of attendees">{{attendee.userName}}</option>
+              </select>-->
             </div>
           </div>
           <div class="col-sm-6">
-            <textarea class="form-control" placeholder="Agenda of Meeting"></textarea>
-          </div>
+            <textarea class="form-control" name="agendaText" placeholder="Agenda of Meeting" [(ngModel)]="meeting.agenda"></textarea>
+          </div>  
           <div class="col-sm-6">
             <label for="meetingDate">Select Date</label>
-            <p-calendar name="meetingDate" [(ngModel)]="meetingDate"></p-calendar>
+            <p-calendar name="meetingDate" [(ngModel)]="meeting.date"></p-calendar>
 
           </div>
           <div class="col-sm-6">

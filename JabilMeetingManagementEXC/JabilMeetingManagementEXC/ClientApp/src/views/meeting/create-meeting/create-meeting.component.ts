@@ -1,4 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Meeting } from '../../../interface/meeting';
+import { User } from '../../../interface/user';
+import { MeetingService } from '../../../services/meeting.service';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-create-meeting',
@@ -8,39 +12,67 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 export class CreateMeetingComponent implements OnInit {
 
   meetingDate: Date;
+  attendees: User[] = [];
+  meeting: Meeting = {
+    meetingId: 0,
+    subject: '',
+    agenda: '',
+    date: new Date()
+  }
+
   itemList = [];
-  selectedItems = [];
+  selectedAttendees = [];
   settings = {};
   @ViewChild('selectedAttendeesTA', { static: false }) selectedAttendeesEl: ElementRef;
 
-  constructor() { }
+  constructor(private meetingService: MeetingService, private userService: UserService) { }
 
   ngOnInit() {
 
-    this.itemList = [
-      { "id": 1, "itemName": "India" },
-      { "id": 2, "itemName": "Singapore" },
-      { "id": 3, "itemName": "Australia" },
-      { "id": 4, "itemName": "Canada" },
-      { "id": 5, "itemName": "South Korea" },
-      { "id": 6, "itemName": "Brazil" },
-      { "id": 7, "itemName": "Brazil" },
-      { "id": 8, "itemName": "Brazil" },
-      { "id": 9, "itemName": "Brazil" },
-      { "id": 10, "itemName": "Brazil" }
-    ];
+    this.getUsers();
 
-    this.selectedItems = [
-      { "id": 1, "itemName": "India" },
-      { "id": 2, "itemName": "Singapore" },
-      { "id": 3, "itemName": "Australia" },
-      { "id": 4, "itemName": "Canada" }];
+    this.selectedAttendees = [];
 
     this.settings = {
-      text: "Select Attendees",
+      text: 'Select Attendees',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      classes: "myclass custom-class"
+      classes: 'myclass custom-class',
+      labelKey: 'userName',
+      primaryKey: 'userId'
     };
   }
+
+  saveMeeting(val: any) {
+    this.meeting;
+    var addMeeting$ = this.meetingService.addNewMeeting(this.meeting).subscribe(response => {
+      if (response) {
+        debugger;
+        console.log(response);
+      }
+    });
+  }
+
+  onItemSelect(item: any) {
+    console.log(item);
+    console.log(this.selectedAttendees);
+  }
+
+  OnItemDeSelect(item: any) {
+    console.log(item);
+    console.log(this.selectedAttendees);
+  }
+  getUsers() {
+
+    var getUsers$ = this.userService.getUsers().subscribe(response => {
+
+      if (response) {
+        debugger;
+        this.attendees = response.value;
+        console.log(this.attendees);
+      }
+    });
+  }
+
+
 }

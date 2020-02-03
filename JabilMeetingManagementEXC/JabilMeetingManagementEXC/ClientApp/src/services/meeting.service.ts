@@ -14,6 +14,10 @@ export class MeetingService {
   constructor(private http: HttpClient) { }
 
   getUserMeetings(userId: number): Observable<any> {
-    return this.http.get<any>(environment.baseApiUrl + '/api/Meeting/meetings-list/' + userId, this.httpOptions);
+    return this.http.get<any>(environment.baseApiUrl + '/Meeting/meetings-list/' + userId, this.httpOptions);
+  }
+
+  addNewMeeting(meeting: Meeting): Observable<any> {
+    return this.http.post<Meeting>(environment.baseApiUrl + '/Meeting/add-meeting', meeting, this.httpOptions);
   }
 }

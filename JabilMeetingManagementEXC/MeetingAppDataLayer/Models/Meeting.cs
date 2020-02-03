@@ -22,6 +22,6 @@ namespace MeetingAppDataLayer.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public IEnumerable<Attendee> Attendees { get; set; }
+        public List<Attendee> Attendees { get; set; }
     }
 }

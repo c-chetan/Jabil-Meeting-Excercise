@@ -6,7 +6,9 @@ using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using MeetingAppDataLayer.Models;
 using MeetingAppBL.DAO;
+using MeetingAppBL.ViewModel;
 using AutoMapper;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,18 +28,19 @@ namespace JabilMeetingManagementEXC.ApiControllers
         
         [HttpPost]
         [Route("authenticate")]
-        public IActionResult AuthenticateUser([FromBody]User user)
+        public IActionResult AuthenticateUser([FromBody]UserVM userVM)
         {
-            string generatedToken;
 
-            if(user != null && user.UserName.Length > 0 && user.Password.Length > 0)
+            if(userVM != null && userVM.UserName.Length > 0 && userVM.Password.Length > 0)
             { 
-                LoginDAO loginDao = new LoginDAO();
+                LoginDAO loginDao = new LoginDAO(_mapper);
                 if(loginDao !=null)
                 {
-                    generatedToken = loginDao.UserAuthenticate(user);
+                    UserVM authenticatedUser = loginDao.UserAuthenticate(userVM);
 
-                    return Ok(new { generatedToken });
+                    authenticatedUser.Password = string.Empty;
+
+                    return Ok(new JsonResult(authenticatedUser));
                 }
             }
             else

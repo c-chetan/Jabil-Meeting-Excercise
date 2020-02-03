@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MeetingAppDataLayer.DAO;
+using MeetingAppBL.DAO;
 using AutoMapper;
 using MeetingAppBL.ViewModel;
 using Newtonsoft.Json;
@@ -29,7 +29,7 @@ namespace JabilMeetingManagementEXC.ApiControllers
             if(UserId!=0)
             {
                 MeetingDAO meetingDAO = new MeetingDAO(mappr);
-                List<AttendeeVM> attendeMeetings = meetingDAO.GetMeetingsList(UserId);
+                List<MeetingsListVM> attendeMeetings = meetingDAO.GetUserMeetings(UserId);
 
 
                 //Avoid Http Response error because of loop attendee-meeting-attendee
@@ -63,5 +63,6 @@ namespace JabilMeetingManagementEXC.ApiControllers
                 return BadRequest();
             }
         }
+
     }
 }

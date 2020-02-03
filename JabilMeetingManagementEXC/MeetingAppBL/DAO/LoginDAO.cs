@@ -8,32 +8,38 @@ using MeetingAppDataLayer.DBContext;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using MeetingAppBL.ViewModel;
+using AutoMapper;
 
 namespace MeetingAppBL.DAO
 {
     public class LoginDAO
     {
         private readonly AppSettings appSettings;
-        public LoginDAO() 
+        private readonly IMapper _mapper;
+
+        public LoginDAO(IMapper mapper) 
         {
             appSettings = new AppSettings();
+            _mapper = mapper;
         }
 
-        public string UserAuthenticate(User user)
+        public UserVM UserAuthenticate(UserVM user)
         {
-            string token;
 
             if(user!=null && user.UserName.Length > 0 && user.Password.Length > 0)
             {
                 using (MeetDBContext dbContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
                 {
                     
-                    var authenticatedUserDetails = dbContext.Set<User>()
+                    var authenticateUser = dbContext.Users
                                                     .Where(x => x.UserName == user.UserName && x.Password == user.Password)
                                                     .FirstOrDefault();                                           
 
-                    if(authenticatedUserDetails!=null && authenticatedUserDetails.UserName.Length > 0 && authenticatedUserDetails.Password.Length > 0)
+                    if(authenticateUser != null && authenticateUser.UserName.Length > 0 && authenticateUser.Password.Length > 0)
                     {
+                        UserVM authenticatedUserDetails = _mapper.Map<UserVM>(authenticateUser);
+
                         var tokenDescriptor = new SecurityTokenDescriptor
                         {
                             Subject = new ClaimsIdentity(new Claim[]
@@ -48,19 +54,15 @@ namespace MeetingAppBL.DAO
                         };
                         var tokenHandler = new JwtSecurityTokenHandler();
                         var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-                        token = tokenHandler.WriteToken(securityToken);
-                        if(token!=null && token.Length > 0)
+                        authenticatedUserDetails.userToken = tokenHandler.WriteToken(securityToken);
+                        if(authenticatedUserDetails.userToken != null && authenticatedUserDetails.userToken.Length > 0)
                         {
-                            return token;
-                        }
-                        else
-                        {
-                            return token = "";
+                            return authenticatedUserDetails;
                         }
                     }
                 }
             }
-            return "";
+            return new UserVM();
         }
     }
 }
