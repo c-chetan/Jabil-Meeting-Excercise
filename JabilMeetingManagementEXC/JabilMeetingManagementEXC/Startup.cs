@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using AutoMapper;
 using  MeetingAppDataLayer;
+using MeetingAppBL.AutoMapper;
 
 
 namespace JabilMeetingManagementEXC
@@ -58,7 +59,13 @@ namespace JabilMeetingManagementEXC
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddAutoMapper(typeof(Startup));
+            var config = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new MapperProfile());
+            });
+            var mapper = config.CreateMapper();
+
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

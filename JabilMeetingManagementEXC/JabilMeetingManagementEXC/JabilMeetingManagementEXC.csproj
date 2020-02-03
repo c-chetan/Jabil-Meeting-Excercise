@@ -27,11 +27,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\interface\attendee.ts" />
+    <None Remove="ClientApp\src\interface\meeting.ts" />
     <None Remove="ClientApp\src\interface\user.ts" />
+    <None Remove="ClientApp\src\services\meeting.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\services\" />
     <Folder Include="ClientApp\src\views\meeting\create-meeting\" />
     <Folder Include="ClientApp\src\views\user\" />
   </ItemGroup>
@@ -41,7 +43,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\interface\attendee.ts" />
+    <TypeScriptCompile Include="ClientApp\src\interface\meeting.ts" />
     <TypeScriptCompile Include="ClientApp\src\interface\user.ts" />
+    <TypeScriptCompile Include="ClientApp\src\services\meeting.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

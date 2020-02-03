@@ -13,7 +13,7 @@ namespace MeetingAppBL.ViewModel
 
         public DateTime Date { get; set; }
 
-        public IEnumerable<AttendeeVM> Attendees { get; set; }
+        public List<AttendeeVM> Attendees { get; set; }
 
     }
 }

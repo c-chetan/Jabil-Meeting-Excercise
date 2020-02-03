@@ -3,6 +3,9 @@
   <div class="col-sm-12 loginContainer">
     <div class="row">
       <div class="col-sm-12">
+        <div class="col-sm-12">
+          <h4>Log In</h4>
+        </div>
         <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
           <div class="col-sm-12">
             <label for="usrName">Username : </label>
@@ -14,10 +17,11 @@
           </div>
           <div class="col-sm-6">
             <button type="submit" class="btn btn-primary">Login</button>
+            <button type="button" class="btn btn-warning" (click)="NavigatesignUp()">SignUp</button>
           </div>
           <p style="color:red" *ngIf="!authenticatedUser">Login Failed</p>
         </form>
-        <button type="button" class="btn btn-warning" routerLink="/user">SignUp</button>
+        
       </div>
     </div>
   </div>

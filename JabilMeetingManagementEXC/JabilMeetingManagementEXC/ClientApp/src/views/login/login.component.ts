@@ -38,4 +38,8 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+
+  NavigatesignUp() {
+    this.router.navigate(['user']);
+  }
 }

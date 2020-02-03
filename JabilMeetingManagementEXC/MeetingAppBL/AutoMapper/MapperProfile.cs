@@ -13,7 +13,11 @@ namespace MeetingAppBL.AutoMapper
 
         public MapperProfile()
         {
-            CreateMap<User, UserVM>();
+            CreateMap<User, UserVM>().ReverseMap();
+
+            CreateMap<Attendee, AttendeeVM>().ReverseMap();
+
+            CreateMap<Meeting, MeetingVM>().ReverseMap();
         }
     }
 }
