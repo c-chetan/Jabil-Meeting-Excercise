@@ -4,14 +4,16 @@ using MeetingAppDataLayer.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MeetingAppDataLayer.Migrations
 {
     [DbContext(typeof(MeetDBContext))]
-    partial class MeetDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200204062115_ChangedForeignKeyColumnsInAttendee")]
+    partial class ChangedForeignKeyColumnsInAttendee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,6 +26,8 @@ namespace MeetingAppDataLayer.Migrations
                     b.Property<int>("AttendeeId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AttendeeName");
 
                     b.Property<bool>("IsMeetingOwner");
 
@@ -65,9 +69,6 @@ namespace MeetingAppDataLayer.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired();
 
                     b.Property<string>("Password")
                         .IsRequired();

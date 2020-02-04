@@ -1,5 +1,6 @@
 export interface Attendee {
   attendeeId: number,
-  attendeeName: string,
-  IsMeetingOwner: boolean
+  attendee
+  Name: string,
+  isMeetingOwner: boolean
 }

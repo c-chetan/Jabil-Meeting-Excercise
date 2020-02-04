@@ -17,7 +17,16 @@ export class MeetingService {
     return this.http.get<any>(environment.baseApiUrl + '/Meeting/meetings-list/' + userId, this.httpOptions);
   }
 
+  getMeeting(meetingId: number): Observable<any> {
+    return this.http.get<Meeting>(environment.baseApiUrl + '/Meeting/' + meetingId, this.httpOptions);
+  }
+
   addNewMeeting(meeting: Meeting): Observable<any> {
+    debugger;
     return this.http.post<Meeting>(environment.baseApiUrl + '/Meeting/add-meeting', meeting, this.httpOptions);
+  }
+
+  removeMeeting(meetingId: number): Observable<any> {
+    return this.http.delete<any>(environment.baseApiUrl + '/Meeting/remove/' +meetingId, this.httpOptions);
   }
 }

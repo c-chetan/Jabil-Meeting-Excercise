@@ -24,4 +24,8 @@ export class UserService {
   getUsers(): Observable<any> {
     return this.http.get<User[]>(environment.baseApiUrl + '/User/users', this.httpOptions); 
   }
+
+  signupUser(user: User): Observable<any> {
+    return this.http.post<User>(environment.baseApiUrl + '/User/add-user', user, this.httpOptions);
+  }
 }

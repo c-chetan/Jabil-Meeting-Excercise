@@ -8,15 +8,18 @@
       <div class="col-sm-12">
         <h4>Sign Up</h4>
       </div>
-      <form #signUpForm="ngForm">
+      <form #signUpForm="ngForm" (ngSubmit)="SignupUser(signUpForm)">
         <div class="col-sm-12">
-          <input type="text" name="newUserName" placeholder="UserName" class="form-control" />
+          <input type="text" name="newUserName" placeholder="Username" ngModel class="form-control" />
         </div>
         <div class="col-sm-12">
-          <input type="password" name="newPas" placeholder="Password" class="form-control" />
+          <input type="text" name="newDisplayName" placeholder="Display Name" ngModel class="form-control" />
         </div>
         <div class="col-sm-12">
-          <input type="password" name="confirmPass" placeholder="Confirm Password" class="form-control" />
+          <input type="password" name="newPas" placeholder="Password" ngModel class="form-control" />
+        </div>
+        <div class="col-sm-12">
+          <input type="password" name="confirmPass" placeholder="Confirm Password" ngModel class="form-control" />
         </div>
         <div class="col-sm-12">
           <button type="submit" class="btn btn-primary">Create</button>

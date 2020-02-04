@@ -45,8 +45,7 @@ namespace JabilMeetingManagementEXC.ApiControllers
                 return BadRequest();
             }
         }
-
-
+        
 
         [HttpGet]
         [Route("users")]
@@ -59,6 +58,33 @@ namespace JabilMeetingManagementEXC.ApiControllers
             List<UserVM> users = userDAO.GetUsers();
 
             return Ok(new JsonResult(users));
+        }
+
+        [HttpPost]
+        [Route("add-user")]
+        public IActionResult AddUser([FromBody]UserVM userVM)
+        {
+            IMapper mappr = _mapper;
+
+            if(userVM!=null)
+            { 
+                UserDAO userDAO = new UserDAO(mappr);
+
+                int userId = userDAO.AddUser(userVM);
+
+                if(userId!=0)
+                {
+                    return Ok(new JsonResult(userId));
+                }
+                else
+                {
+                    return Ok(new JsonResult(new { userId = 0 }));
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

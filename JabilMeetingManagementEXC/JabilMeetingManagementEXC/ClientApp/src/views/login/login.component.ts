@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   user: User = {
     userCode: '',
     userName: '',
+    displayName: '',
     password: '',
     userToken: ''
   };

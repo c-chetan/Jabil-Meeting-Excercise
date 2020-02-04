@@ -18,6 +18,9 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
     CalendarModule,
     AngularMultiSelectModule,
     CreateMeetingRoutingModule
+  ],
+  exports: [
+    CreateMeetingComponent
   ]
 })
 export class CreateMeetingModule { }

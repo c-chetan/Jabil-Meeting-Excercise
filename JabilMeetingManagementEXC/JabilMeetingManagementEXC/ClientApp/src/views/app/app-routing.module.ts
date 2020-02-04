@@ -22,6 +22,10 @@ const routes: Routes = [
       {
         path: 'add-meeting',
         loadChildren: () => import('../meeting/create-meeting/create-meeting.module').then(m => m.CreateMeetingModule)
+      },
+      {
+        path: 'edit-meeting',
+        loadChildren: () => import('../meeting/edit-meeting/edit-meeting.module').then(m => m.EditMeetingModule)
       }
     ]
   },

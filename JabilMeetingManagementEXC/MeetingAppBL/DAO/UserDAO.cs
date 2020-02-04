@@ -54,5 +54,31 @@ namespace MeetingAppBL.DAO
                 return new UserVM();
             }
         }
+
+        public int AddUser(UserVM userVM)
+        {
+            if(userVM!=null && userVM.UserId == 0)
+            {
+                using (MeetDBContext dBContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
+                {
+
+
+                    var user = _mapper.Map<User>(userVM);
+
+                    var addUser = dBContext.Users.Add(user);
+                    dBContext.SaveChanges();
+
+                    var addedUserDetails = dBContext.Users.Where(u => u.UserName == user.UserName).First();
+
+                    int newAddedUserId = addedUserDetails.UserId;
+
+                    return newAddedUserId;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }

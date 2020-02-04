@@ -1,28 +1,37 @@
 <div class="container">
+  <div class="card">
+        <div class="card-header">
+          <div class="col-sm-12">
+            <h4>Log In</h4>
+          </div>
+          </div>
+        <div class="card-body">
+          <div class="col-sm-12">
+            <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
+              <div class="col-sm-12 bottom-padding">
+                <input type="text" #userName name="usrName" ngModel class="form-control" placeholder="Username" />
+              </div>
+              <div class="col-sm-12 bottom-padding">
+                <input type="password" #password name="passw" ngModel class="form-control" placeholder="Password" />
+              </div>
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-3"></div>
 
-  <div class="col-sm-12 loginContainer">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="col-sm-12">
-          <h4>Log In</h4>
+                  <div class="col-sm-3">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button type="button" class="btn btn-warning" (click)="NavigatesignUp()">SignUp</button>
+                  </div>
+                  <div class="col-sm-3"></div>
+                </div>
+              </div>
+              <p style="color:red" *ngIf="!authenticatedUser">Login Failed</p>
+            </form>
+
+          </div>
         </div>
-        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
-          <div class="col-sm-12">
-            <label for="usrName">Username : </label>
-            <input type="text" #userName name="usrName" ngModel class="form-control" />
-          </div>
-          <div class="col-sm-12">
-            <label for="passw">Password : </label>
-            <input type="password" #password name="passw" ngModel class="form-control" />
-          </div>
-          <div class="col-sm-6">
-            <button type="submit" class="btn btn-primary">Login</button>
-            <button type="button" class="btn btn-warning" (click)="NavigatesignUp()">SignUp</button>
-          </div>
-          <p style="color:red" *ngIf="!authenticatedUser">Login Failed</p>
-        </form>
-        
-      </div>
-    </div>
+          
   </div>
 </div>

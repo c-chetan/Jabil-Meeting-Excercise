@@ -13,16 +13,13 @@ namespace MeetingAppDataLayer.Models
         [Key]
         public int AttendeeId { get; set; }
 
-
-        public string AttendeeName { get; set; }
-
         [Required]
         public bool IsMeetingOwner { get; set; }
 
-        [ForeignKey("UserAttendeeId")]
+        [ForeignKey("UserId")]
         public User User { get; set; }
 
-        [ForeignKey("MeetingAttendeeId")]
+        [ForeignKey("MeetingId")]
         public Meeting Meeting { get; set; }
     }
 }

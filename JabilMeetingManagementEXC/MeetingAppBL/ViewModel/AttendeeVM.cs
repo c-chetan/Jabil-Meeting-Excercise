@@ -8,9 +8,9 @@ namespace MeetingAppBL.ViewModel
 
         public int AttendeeId { get; set; }
 
-        public string AttendeeName { get; set; }
-
         public bool IsMeetingOwner { get; set; }
+
+        public int userId { get; set; }
         
         public UserVM User { get; set; }
         

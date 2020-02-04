@@ -30,8 +30,6 @@ namespace JabilMeetingManagementEXC.ApiControllers
             {
                 MeetingDAO meetingDAO = new MeetingDAO(mappr);
                 List<MeetingsListVM> attendeMeetings = meetingDAO.GetUserMeetings(UserId);
-
-
                 //Avoid Http Response error because of loop attendee-meeting-attendee
                 var jsonOptions = new JsonSerializerSettings
                 {
@@ -49,6 +47,7 @@ namespace JabilMeetingManagementEXC.ApiControllers
         [Route("add-meeting")]
         public IActionResult CreateMeeting([FromBody]MeetingVM meetingVM)
         {
+            
             IMapper mappr = _mapper;
 
             if(meetingVM!=null)
@@ -57,6 +56,44 @@ namespace JabilMeetingManagementEXC.ApiControllers
                 var result = meetingDAO.AddMeeting(meetingVM);
                 
                 return Ok(result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("{meetingId}")]
+        public IActionResult GetMeeting(int meetingId)
+        {
+            IMapper mappr = _mapper;
+
+            if (meetingId!=0)
+            {
+                MeetingDAO meetingDAO = new MeetingDAO(mappr);
+                MeetingVM meeting = meetingDAO.GetMeeting(meetingId);
+
+                return Ok(new JsonResult(meeting));
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete]
+        [Route("remove/{meetingId}")]
+        public IActionResult RemoveMeeting(int meetingId)
+        {
+            IMapper mappr = _mapper;
+
+            if(meetingId!=0)
+            {
+                MeetingDAO meetingDAO = new MeetingDAO(mappr);
+                int removedMeetingId = meetingDAO.RemoveMeeting(meetingId);
+                return Ok(new JsonResult(removedMeetingId));
             }
             else
             {

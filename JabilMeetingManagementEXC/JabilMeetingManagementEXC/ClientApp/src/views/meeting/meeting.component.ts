@@ -17,6 +17,7 @@ export class MeetingComponent implements OnInit {
   meetingAttendees: Attendee[];
   user: User;
   getUser$: any;
+  deleteMeeting$: any;
   constructor(private router: Router,
               private meetingService: MeetingService,
               private userService: UserService
@@ -25,21 +26,16 @@ export class MeetingComponent implements OnInit {
 
   ngOnInit() {
 
-    //var userMeetings$ = this.meetingService.getUserMeetings(2).subscribe(response => {
-    //  if (response)
-
-    //  var meetings = response.map(m => m.Meeting);
-    //  var attendees = meetings.map(a => a.Attendees);
-    //  this.userMeetings = meetings;
-    //  this.meetingAttendees = attendees;
-    //  console.log(meetings);
-    //  console.log(attendees);
-    //})
+    var userMeetings$ = this.meetingService.getUserMeetings(2).subscribe(response => {
+      if (response)
+      var meetings = response.map(m => m.Meeting);
+      var attendees = meetings.map(a => a.Attendees);
+      this.userMeetings = meetings;
+      this.meetingAttendees = attendees;
+    })
 
     this.getUser$ = this.userService.getUserDetails(1).subscribe(response => {
       if (response) {
-        debugger;
-
       }
     });
 
@@ -50,7 +46,16 @@ export class MeetingComponent implements OnInit {
 
   }
 
-  editUser() {
-    this.router.navigate(['meetings/add-meeting']);
+  editUser(meetingId: any) {
+    debugger;
+    this.router.navigate(['meetings/edit-meeting/' + meetingId]);
+  }
+
+  deleteMeeting(meetingId: number) {
+    this.deleteMeeting$ = this.meetingService.removeMeeting(meetingId).subscribe(response => {
+      if (response) {
+        console.log(response);
+      }
+    })
   }
 }
