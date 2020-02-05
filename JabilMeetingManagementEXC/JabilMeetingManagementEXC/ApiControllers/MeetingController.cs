@@ -28,6 +28,9 @@ namespace JabilMeetingManagementEXC.ApiControllers
             IMapper mappr = _mapper;
             if(UserId!=0)
             {
+                //this.HttpContext.User.Identity.IsAuthenticated;
+                //this.HttpContext.User.Claims.GetEnumerator().Current.Value
+
                 MeetingDAO meetingDAO = new MeetingDAO(mappr);
                 List<MeetingsListVM> attendeMeetings = meetingDAO.GetUserMeetings(UserId);
                 //Avoid Http Response error because of loop attendee-meeting-attendee
@@ -53,9 +56,9 @@ namespace JabilMeetingManagementEXC.ApiControllers
             if(meetingVM!=null)
             {
                 MeetingDAO meetingDAO = new MeetingDAO(mappr);
-                var result = meetingDAO.AddMeeting(meetingVM);
+                int meetingId = meetingDAO.AddMeeting(meetingVM);
                 
-                return Ok(result);
+                return Ok(new JsonResult(meetingId));
             }
             else
             {
@@ -69,7 +72,7 @@ namespace JabilMeetingManagementEXC.ApiControllers
         {
             IMapper mappr = _mapper;
 
-            if (meetingId!=0)
+            if (meetingId !=0 )
             {
                 MeetingDAO meetingDAO = new MeetingDAO(mappr);
                 MeetingVM meeting = meetingDAO.GetMeeting(meetingId);

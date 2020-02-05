@@ -31,74 +31,26 @@ namespace MeetingAppBL.DAO
                 using (MeetDBContext dBContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
                 {
 
-                    //var userMeetings = dBContext.Attendees
-                    //                    .Include(a => a.Meeting)
-                    //                    .Include(m => m.Meeting.Attendees)
-                    //                    .ThenInclude(a => a.User)
-                    //                    .Where(x => x.User.UserId == Id)
-                    //                    .ToList();
-
-
-
-                    //Working Code for Meeting > Attendees > Users
-                    //var userMeetings = dBContext.Meetings
-                    //                       .Include(m => m.Attendees)
-                    //                       .ThenInclude(a => a.User)
-                    //                       .Where(m => m.Attendees.Where(a => a.User!=null && a.User.UserId == Id).Any())
-                    //                       .ToList();
-
-                    //var attendees = dBContext.Attendees.Where(a => a.User.UserId == Id);
+                    var attendee = dBContext.Attendees.Include(a => a.User)
+                                                      .Where(a => a.User.UserId == Id && a.Meeting.Date >= DateTime.Now);
+                                                      
 
                     var attendeeMeetings = dBContext.Meetings
-                                                    .Join(dBContext.Attendees,
+                                                    .Join(attendee,
                                                             m => m.MeetingId,
                                                             a => a.Meeting.MeetingId,
                                                             (m, a) => new MeetingsListVM
                                                             {
+                                                                MeetingId = m.MeetingId,
                                                                 Subject = m.Subject,
                                                                 Agenda = m.Agenda,
-                                                                Attendees = string.Join(';', m.Attendees.Select(x => x.User.UserName).ToList()),
+                                                                AttendeesNames = string.Join("; ", m.Attendees.Select(x => x.User.DisplayName)
+                                                                                                        .Distinct().ToList()),
                                                                 MeetingDate = m.Date
-                                                            })
+                                                            }).Distinct()
                                                             .ToList();
-                                                     
 
-
-
-                    //.ThenInclude(u => u.ch)
-                    //.Include(m => m.Attendees.Select(a => a.User))
-                    //.Where(m => m.Attendees.Where(a => a.User.UserId == Id).Any())
-                    //.ToList();
-                    //.Select(a => new MeetingsListVM() {
-                    //    Subject = a.Subject,
-                    //    Attendees = string.Join(';', m.Attendees.Select(u => u.User.UserName).ToList()),
-                    //    MeetingDate = a.Date,
-                    //    Agenda = a.Agenda
-                    //})
-                    //.Select(m => new MeetingsListVM() {
-                    //    MeetingId = m.MeetingId,
-                    //    Subject = m.Subject,
-                    //    Attendees = string.Join(';', m.Attendees.Select(a => a.User.UserName).ToList()),
-                    //    MeetingDate = m.Date,
-                    //    Agenda = m.Agenda
-                    //})
-                    //.ToList();
-
-                    //dBContext.(userMeetings)
-                    //    .Collection(m => m.)
-
-                    //userMeetings.ForEach(m => {
-                    //    var listAttendees = m.Attendees.Select(a => a.User.UserName).ToList();
-
-                    //    var commaAttendeesName = string.Join(';', listAttendees);
-                    //var userMeetingsVM = _mapper.Map<List<Attendee>, List<AttendeeVM>>(userMeetings);
-                    //s});
-
-                    //var userMeetingsVM = _mapper.Map<List<Attendee>, List<AttendeeVM>>(userMeetings);
-
-                    return new List<MeetingsListVM>();
-                    //return userMeetings;
-                    //return userMeetingsVM;
+                    return attendeeMeetings;
                 }
             }
             else
@@ -123,11 +75,6 @@ namespace MeetingAppBL.DAO
 
                     var addedMeetingDetails = dBContext.Meetings.Where(m => m.Subject == meeting.Subject).First();
                     int newAddedMeetingId = addedMeetingDetails.MeetingId;
-
-                    //var assignUserId = dBContext.Attendees
-                    //                            Where(a => a.Meeting.MeetingId == newAddedMeetingId);
-
-
                     return newAddedMeetingId;
                 }
             }
@@ -136,9 +83,22 @@ namespace MeetingAppBL.DAO
             else if (meetingVM != null && meetingVM.MeetingId > 0)
             {
                 using (MeetDBContext dBContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
-                {
+                {   
+                    var removeExisingAttendees = dBContext.Attendees
+                                                            .Where(a => a.Meeting.MeetingId == meetingVM.MeetingId)
+                                                            .ToList();
+                    dBContext.Attendees.RemoveRange(removeExisingAttendees);
+                    dBContext.SaveChanges();
+
                     var editedMeeting = _mapper.Map<Meeting>(meetingVM);
-                    var updateMeeting = dBContext.Meetings.Update(editedMeeting);
+
+                    editedMeeting.Attendees.ForEach(a => {
+                        a.MeetingId = meetingVM.MeetingId;
+                        //a.Meeting = null;
+                        a.AttendeeId = 0;
+                    });
+                    dBContext.Meetings.Update(editedMeeting);
+                    dBContext.Attendees.AddRange(editedMeeting.Attendees);
                     dBContext.SaveChanges();
                     return meetingVM.MeetingId;
                 }
@@ -155,7 +115,16 @@ namespace MeetingAppBL.DAO
             {
                 using (MeetDBContext dBContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
                 {
-                    var toEditMeeting = dBContext.Meetings.Where(m => m.MeetingId == meetingId).First();
+                    /*
+                    var meetingAttendees = dBContext.Attendees
+                                                        .Include(a => a.User)
+                                                        //.Where(a => a.IsMeetingOwner == false)
+                                                        .Where(a => a.MeetingId == meetingId).ToList();
+                    */
+
+                    var toEditMeeting = dBContext.Meetings
+                                            .Where(m => m.MeetingId == meetingId)
+                                            .First();
 
                     MeetingVM meetingVM = _mapper.Map<MeetingVM>(toEditMeeting);
 

@@ -18,6 +18,8 @@ export class MeetingComponent implements OnInit {
   user: User;
   getUser$: any;
   deleteMeeting$: any;
+  loggedInUserId: number;
+
   constructor(private router: Router,
               private meetingService: MeetingService,
               private userService: UserService
@@ -26,28 +28,30 @@ export class MeetingComponent implements OnInit {
 
   ngOnInit() {
 
-    var userMeetings$ = this.meetingService.getUserMeetings(2).subscribe(response => {
+    this.loggedInUserId = parseInt(JSON.parse(localStorage.getItem('currentUserId')));
+
+    var userMeetings$ = this.meetingService.getUserMeetings(this.loggedInUserId).subscribe(response => {
+      debugger;
       if (response)
-      var meetings = response.map(m => m.Meeting);
-      var attendees = meetings.map(a => a.Attendees);
-      this.userMeetings = meetings;
-      this.meetingAttendees = attendees;
+      //var meetings = response;
+      //var meetings = response.map(m => m.Meeting);
+      //var attendees = meetings.map(a => a.Attendees);
+        this.userMeetings = response;
+      //this.meetingAttendees = attendees;
     })
 
-    this.getUser$ = this.userService.getUserDetails(1).subscribe(response => {
-      if (response) {
-      }
-    });
+    //this.getUser$ = this.userService.getUserDetails(this.loggedInUserId).subscribe(response => {
+    //  if (response) {
+    //  }
+    //});
 
   }
 
   navigateToAddMeeting() {
     this.router.navigate(['meetings/add-meeting']);
-
   }
 
   editUser(meetingId: any) {
-    debugger;
     this.router.navigate(['meetings/edit-meeting/' + meetingId]);
   }
 
@@ -56,6 +60,6 @@ export class MeetingComponent implements OnInit {
       if (response) {
         console.log(response);
       }
-    })
+    });
   }
 }

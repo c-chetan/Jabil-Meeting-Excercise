@@ -45,7 +45,7 @@
                       <c-item>
                         <ng-template let-item="item">
                           <!--*ngFor="let attendee of attendees"-->
-                          <label style="color: #333;min-width: 150px;">{{item.userName}}</label>
+                          <label style="color: #333;min-width: 150px;">{{item.displayName}}</label>
                         </ng-template>
                       </c-item>
 
@@ -74,7 +74,7 @@
                     <label for="meetingDate">Select Date&nbsp;<span style="color:red">&#42;</span></label>
                   </div>
                   <div class="col-sm-10">
-                    <p-calendar name="meetingDate" [minDate]="minimumDate" [showTime]="true" [(ngModel)]="meeting.date"></p-calendar>
+                    <p-calendar name="meetingDate" [minDate]="minimumDate" [showTime]="true" [(ngModel)]="meeting.date" hourFormat="12"></p-calendar>
                   </div>
                   <!--[(ngModel)]="meeting.date"-->
                 </div>

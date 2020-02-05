@@ -4,6 +4,7 @@ export interface Meeting {
   subject: string,
   meetingId: number,
   agenda: string,
-  date: Date,
+  attendeesNames: string,
+  date: Date
   attendees: Attendee[]
 }

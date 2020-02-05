@@ -11,7 +11,7 @@ namespace MeetingAppBL.ViewModel
 
         public string Subject { get; set; }
 
-        public string Attendees { get; set; }
+        public string AttendeesNames { get; set; }
 
         public DateTime MeetingDate { get; set; }
 

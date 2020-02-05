@@ -3,6 +3,7 @@ import { Meeting } from '../../../interface/meeting';
 import { User } from '../../../interface/user';
 import { MeetingService } from '../../../services/meeting.service';
 import { UserService } from 'src/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-meeting',
@@ -17,47 +18,55 @@ export class CreateMeetingComponent implements OnInit {
     meetingId: 0,
     subject: '',
     agenda: '',
+    attendeesNames: '',
     date: new Date(),
     attendees: []
   }
   currentUserId: number;
   itemList = [];
-  selectedAttendees = [];
+  @Input() selectedAttendees = [];
   settings = {};
   minimumDate = new Date();
   @ViewChild('selectedAttendeesTA', { static: false }) selectedAttendeesEl: ElementRef;
 
-  constructor(private meetingService: MeetingService, private userService: UserService) { }
+  constructor(private meetingService: MeetingService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-
     this.currentUserId = JSON.parse(localStorage.getItem('currentUserId'));
     this.getUsers();
     this.selectedAttendees = [];
     this.settings = {
-      text: 'Select Attendees',
+      text: 'Select atleast 1 Attendee',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       classes: 'myclass custom-class',
-      labelKey: 'userName',
+      noDataLabel: 'No Attendees',
+      labelKey: 'displayName',
       primaryKey: 'userId',
-      limitSelection: 10
+      limitSelection: 10,
+      minSelectionLimit:1
     };
   }
 
   saveMeeting() {
     debugger;
-    this.meeting;
-    var meetingOwner = this.meeting.attendees.find(user => user.attendeeId == this.currentUserId);
-    //if (meetingOwner) {
-    //  this.meeting.attendeesList.
-    //}
-    var addMeeting$ = this.meetingService.addNewMeeting(this.meeting).subscribe(response => {
-      if (response) {
-        debugger;
-        console.log(response);
-      }
-    });
+    if (this.meeting && this.meeting.attendees.length > 1) {
+      JSON.stringify(this.meeting.date);
+      //var meetingOwner = this.meeting.attendees.find(user => user.userId == this.currentUserId);
+      //meetingOwner.isMeetingOwner = true;
+      //var meetingOwnerIndex = this.meeting.attendees.findIndex(u => u.userId == this.currentUserId);
+      //this.meeting.attendees[meetingOwnerIndex] = meetingOwner;
+      var addMeeting$ = this.meetingService.addNewMeeting(this.meeting).subscribe(response => {
+        if (response && response.value.meetingId > 0) {
+          debugger;
+          console.log(response);
+          this.router.navigate(['meetings/meetings-list']);
+        }
+      });
+    }
+    else {
+      console.log(this.meeting);
+    }
   }
 
   onItemSelect(item: any) {
@@ -80,8 +89,8 @@ export class CreateMeetingComponent implements OnInit {
   getUsers() {
     var getUsers$ = this.userService.getUsers().subscribe(response => {
       if (response) {
+        debugger;
         this.attendeesListDD = response.value;
-        console.log(this.attendeesListDD);
       }
     });
   }
@@ -89,6 +98,7 @@ export class CreateMeetingComponent implements OnInit {
   clearMeetingDetails() {
     this.meeting.subject = '';
     this.meeting.agenda = '';
+    this.selectedAttendees = [];
 
   }
 }

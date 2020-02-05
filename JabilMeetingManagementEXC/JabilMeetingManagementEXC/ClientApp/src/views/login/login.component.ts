@@ -31,9 +31,7 @@ export class LoginComponent implements OnInit {
     this.user.userName = user.usrName;
     this.user.password = user.passw;
     this.authenticateUser$ = this.userService.authUser(this.user).subscribe(response => {
-      console.log(response);
-      if (response && response.value.userToken.length > 100) {
-        console.log(response.value.userToken);  
+      if (response && response.value.userToken.length > 100) {  
         this.router.navigate(['/meetings/meetings-list']);
         JSON.stringify(localStorage.setItem('currentUserId', response.value.userId));
       }

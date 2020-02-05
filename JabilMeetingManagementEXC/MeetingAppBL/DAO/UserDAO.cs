@@ -28,6 +28,7 @@ namespace MeetingAppBL.DAO
                                 .Select(u => new UserVM {
                                     UserId = u.UserId,
                                     UserName = u.UserName,
+                                    DisplayName = u.DisplayName
                                 })
                                 .ToList();
 
@@ -37,13 +38,13 @@ namespace MeetingAppBL.DAO
             }
         }
 
-        public UserVM GetUser(int UserId)
+        public UserVM GetUser(int userId)
         {
-            if(UserId!= 0)
+            if(userId!= 0)
             {
                 using (MeetDBContext dBContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
                 {
-                    var user = dBContext.Users.Find(UserId);
+                    var user = dBContext.Users.Find(userId);
 
                     var userVM = _mapper.Map<UserVM>(user);
                     return userVM;

@@ -45,7 +45,6 @@ namespace MeetingAppBL.DAO
                             Subject = new ClaimsIdentity(new Claim[]
                             {
                                 new Claim("UserId", authenticatedUserDetails.UserId.ToString())
-
                             }),
                             Expires = DateTime.UtcNow.AddMinutes(5),
                             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(

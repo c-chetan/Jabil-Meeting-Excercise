@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Meeting } from '../interface/meeting';
 import { environment } from '../environments/environment';
+import { Attendee } from '../interface/attendee';
 
 @Injectable({
   providedIn: 'root'
