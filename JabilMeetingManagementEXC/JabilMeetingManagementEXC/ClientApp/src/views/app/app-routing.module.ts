@@ -1,6 +1,7 @@
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from '../../views/login/login.component';
+import { DefaultLayoutComponent } from '../shared-layout/default-layout.component';
 
 const routes: Routes = [
   {
@@ -14,10 +15,11 @@ const routes: Routes = [
   },
   {
     path: 'meetings',
+    component: DefaultLayoutComponent,
     children: [
       {
         path: 'meetings-list',
-        loadChildren: () => import('../meeting/meeting.module').then(m => m.MeetingModule)
+        loadChildren: () => import('../meeting/meetings-list.module').then(m => m.MeetingModule)
       },
       {
         path: 'add-meeting',

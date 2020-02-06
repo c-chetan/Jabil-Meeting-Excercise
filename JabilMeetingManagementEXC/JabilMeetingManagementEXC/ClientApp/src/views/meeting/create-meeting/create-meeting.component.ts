@@ -50,14 +50,11 @@ export class CreateMeetingComponent implements OnInit {
 
   saveMeeting() {
     debugger;
+    //this.meeting.date = 
     if (this.meeting && this.meeting.attendees.length > 1) {
-      JSON.stringify(this.meeting.date);
-      //var meetingOwner = this.meeting.attendees.find(user => user.userId == this.currentUserId);
-      //meetingOwner.isMeetingOwner = true;
-      //var meetingOwnerIndex = this.meeting.attendees.findIndex(u => u.userId == this.currentUserId);
-      //this.meeting.attendees[meetingOwnerIndex] = meetingOwner;
+      //JSON.stringify(this.meeting.date);
       var addMeeting$ = this.meetingService.addNewMeeting(this.meeting).subscribe(response => {
-        if (response && response.value.meetingId > 0) {
+        if (response && response.value > 0) {
           debugger;
           console.log(response);
           this.router.navigate(['meetings/meetings-list']);
@@ -70,26 +67,20 @@ export class CreateMeetingComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    console.log(item);
-    debugger;
     this.meeting.attendees = [];
     if (this.selectedAttendees && this.selectedAttendees.length > 0) {
       this.meeting.attendees = this.selectedAttendees;
     }
-    console.log(this.selectedAttendees);
   }
 
   OnItemDeSelect(item: any) {
-    console.log(item);
     this.meeting.attendees = [];
     this.meeting.attendees = this.selectedAttendees;
-    console.log(this.selectedAttendees);
   }
 
   getUsers() {
     var getUsers$ = this.userService.getUsers().subscribe(response => {
       if (response) {
-        debugger;
         this.attendeesListDD = response.value;
       }
     });

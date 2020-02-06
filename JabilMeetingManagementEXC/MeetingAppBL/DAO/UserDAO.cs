@@ -20,7 +20,7 @@ namespace MeetingAppBL.DAO
             _mapper = mapper;
         }
 
-        public List<UserVM> GetUsers()
+        public List<UserVM> GetUsers(int loggedInUserId)
         {
             using (MeetDBContext dBContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
             {
@@ -30,6 +30,7 @@ namespace MeetingAppBL.DAO
                                     UserName = u.UserName,
                                     DisplayName = u.DisplayName
                                 })
+                                .Where(u => u.UserId!=loggedInUserId)
                                 .ToList();
 
                 //List<UserVM> usersList = _mapper.Map<List<User>,List<UserVM>>(users);

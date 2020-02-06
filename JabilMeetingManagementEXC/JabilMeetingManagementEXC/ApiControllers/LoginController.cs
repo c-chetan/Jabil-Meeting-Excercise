@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using MeetingAppDataLayer.Models;
 using MeetingAppBL.DAO;
 using MeetingAppBL.ViewModel;
@@ -14,11 +15,10 @@ using AutoMapper;
 
 namespace JabilMeetingManagementEXC.ApiControllers
 {
-
+    [AllowAnonymous]
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
-
         private readonly IMapper _mapper;
 
         public LoginController(IMapper mapper)
@@ -40,7 +40,15 @@ namespace JabilMeetingManagementEXC.ApiControllers
 
                     authenticatedUser.Password = string.Empty;
 
-                    return Ok(new JsonResult(authenticatedUser));
+                    if(authenticatedUser.userToken != "")
+                    { 
+
+                        return Ok(new JsonResult(authenticatedUser));
+                    }
+                    else
+                    {
+                        return Unauthorized();
+                    }
                 }
             }
             else

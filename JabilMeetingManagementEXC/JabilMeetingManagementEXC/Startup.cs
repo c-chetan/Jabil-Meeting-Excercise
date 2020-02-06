@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,13 +39,13 @@ namespace JabilMeetingManagementEXC
             {
                 opt.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    //ValidateLifetime = true,
+                    //ValidateIssuerSigningKey = true,
 
-                    ValidIssuer = settings.HostUrl,
-                    ValidAudience = settings.HostUrl,
+                    //ValidIssuer = settings.HostUrl,
+                    //ValidAudience = settings.HostUrl,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecurityKey))
 
                 };
@@ -72,7 +72,6 @@ namespace JabilMeetingManagementEXC
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseAuthentication();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

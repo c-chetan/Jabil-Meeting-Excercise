@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using MeetingAppBL.DAO;
 using MeetingAppBL.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace JabilMeetingManagementEXC.ApiControllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
@@ -23,7 +25,7 @@ namespace JabilMeetingManagementEXC.ApiControllers
         }
 
         [HttpGet("{userId}")]
-        public IActionResult GetUser(int userId)
+        public IActionResult GetUserDetails(int userId)
         {
             if(userId!=0)
             {
@@ -53,9 +55,16 @@ namespace JabilMeetingManagementEXC.ApiControllers
         {
             IMapper mappr = _mapper;
 
+
+            var userClaims = User.Claims;
+            var currentUser = userClaims
+                                    .Where(c => c.Type == "UserId")
+                                    .FirstOrDefault();
+            int currentUserId = Int32.Parse(currentUser.Value);
+
             UserDAO userDAO = new UserDAO(mappr);
 
-            List<UserVM> users = userDAO.GetUsers();
+            List<UserVM> users = userDAO.GetUsers(currentUserId);
 
             return Ok(new JsonResult(users));
         }

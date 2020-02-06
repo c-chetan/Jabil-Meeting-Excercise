@@ -13,6 +13,8 @@ namespace MeetingAppBL.ViewModel
 
         public string AttendeesNames { get; set; }
 
+        public string CreatedBy { get; set; }
+
         public DateTime MeetingDate { get; set; }
 
         public string Agenda { get; set; }

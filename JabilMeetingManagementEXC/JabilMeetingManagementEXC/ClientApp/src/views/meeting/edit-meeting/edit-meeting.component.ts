@@ -40,7 +40,6 @@ export class EditMeetingComponent implements OnInit {
     if (meetingId && meetingId > 0) {
       var getMeeting$ = this.meetingService.getMeeting(meetingId).subscribe(response => {
         if (response) {
-          debugger;
           this.meetingToEdit = response.value;
           this.meetingToEdit.date = new Date(response.value.date);
           this.existingUsers = response.value.attendees.map(x => x.user);

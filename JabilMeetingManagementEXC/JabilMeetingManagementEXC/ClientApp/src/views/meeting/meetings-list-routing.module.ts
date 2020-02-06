@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { MeetingComponent } from './meeting.component';
+import { MeetingsListComponent } from './meetings-list.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MeetingComponent
+    component: MeetingsListComponent
   }
 ];
 

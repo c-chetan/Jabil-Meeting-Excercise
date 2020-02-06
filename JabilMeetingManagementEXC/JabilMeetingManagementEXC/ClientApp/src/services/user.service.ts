@@ -14,7 +14,8 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   authUser(user: User): Observable<any> {
-    return this.http.post<User>(environment.baseApiUrl + '/Login/authenticate', user, this.httpOptions);
+    var reqHeader = new HttpHeaders({ 'Content-Type': 'application/json', 'No-Auth': 'True' });
+    return this.http.post<User>(environment.baseApiUrl + '/Login/authenticate', user, { headers: reqHeader });
   }
 
   getUserDetails(userId: number): Observable<any> {
@@ -26,6 +27,7 @@ export class UserService {
   }
 
   signupUser(user: User): Observable<any> {
-    return this.http.post<User>(environment.baseApiUrl + '/User/add-user', user, this.httpOptions);
+    var reqHeader = new HttpHeaders({ 'Content-Type': 'application/json', 'No-Auth': 'True' });
+    return this.http.post<User>(environment.baseApiUrl + '/User/add-user', user, { headers: reqHeader });
   }
 }

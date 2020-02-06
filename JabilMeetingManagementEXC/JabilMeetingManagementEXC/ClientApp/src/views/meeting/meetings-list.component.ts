@@ -5,17 +5,18 @@ import { Meeting } from '../../interface/meeting';
 import { Attendee } from '../../interface/attendee';
 import { User } from '../../interface/user';
 import { Router } from '@angular/router';
+import { parse } from 'url';
 
 @Component({
   selector: 'app-meeting',
-  templateUrl: './meeting.component.html',
-  styleUrls: ['./meeting.component.scss']
+  templateUrl: './meetings-list.component.html',
+  styleUrls: ['./meetings-list.component.scss']
 })
-export class MeetingComponent implements OnInit {
+export class MeetingsListComponent implements OnInit {
 
   userMeetings: Meeting[];
   meetingAttendees: Attendee[];
-  user: User;
+  loggedInUserDisplayname: string;
   getUser$: any;
   deleteMeeting$: any;
   loggedInUserId: number;
@@ -27,24 +28,12 @@ export class MeetingComponent implements OnInit {
   { }
 
   ngOnInit() {
-
     this.loggedInUserId = parseInt(JSON.parse(localStorage.getItem('currentUserId')));
-
+    this.loggedInUserDisplayname = localStorage.getItem('currentUserDisplayName');
     var userMeetings$ = this.meetingService.getUserMeetings(this.loggedInUserId).subscribe(response => {
-      debugger;
       if (response)
-      //var meetings = response;
-      //var meetings = response.map(m => m.Meeting);
-      //var attendees = meetings.map(a => a.Attendees);
         this.userMeetings = response;
-      //this.meetingAttendees = attendees;
-    })
-
-    //this.getUser$ = this.userService.getUserDetails(this.loggedInUserId).subscribe(response => {
-    //  if (response) {
-    //  }
-    //});
-
+    });
   }
 
   navigateToAddMeeting() {

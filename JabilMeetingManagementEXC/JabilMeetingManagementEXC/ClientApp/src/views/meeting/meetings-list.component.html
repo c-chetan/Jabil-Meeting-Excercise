@@ -33,6 +33,9 @@
                 Meeting Venue
               </th>
               <th>
+                Organized By
+              </th>
+              <th>
                 Actions
               </th>
             </tr>
@@ -41,23 +44,19 @@
             <tr>
               <td>{{meeting.Subject}}</td>
               <td>{{meeting.AttendeesNames}}</td>
-              <!--<ng-template let-attendees="rowData">
-    <td>
-      <ul *ngFor="let attendee of attendees.userMeetings.Attendees">
-        <li>{{meeting.AttendeesName}}</li>
-      </ul>
-    </td>
-  </ng-template>-->
               <td>{{meeting.Agenda}}</td>
               <!--<td>{{meeting.MeetingDate | date: 'MM-dd-yyyy'}}</td>-->
               <td>{{meeting.MeetingDate | date: 'short'}}</td>
+              <td>{{meeting.CreatedBy}}</td>
               <td>
-                <a (click)="editUser(meeting.MeetingId)">
-                  <i class="pi pi-pencil"></i>
-                </a>
-                <a>
-                  <i class="pi pi-trash" (click)="deleteMeeting(meeting.MeetingId)"></i>
-                </a>
+                <div *ngIf="meeting.CreatedBy == loggedInUserDisplayname">
+                  <a (click)="editUser(meeting.MeetingId)">
+                    <i class="pi pi-pencil"></i>
+                  </a>
+                  <a>
+                    <i class="pi pi-trash" (click)="deleteMeeting(meeting.MeetingId)"></i>
+                  </a>
+                </div>
               </td>
             </tr>
           </ng-template>

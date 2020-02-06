@@ -1,3 +1,4 @@
+<p-toast position="top-right"></p-toast>
 <div class="container">
   <div class="card">
         <div class="card-header">
@@ -9,20 +10,24 @@
           <div class="col-sm-12">
             <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
               <div class="col-sm-12 bottom-padding">
-                <input type="text" #userName name="usrName" ngModel class="form-control" placeholder="Username" />
+                <input type="text" #userName name="usrName" [(ngModel)]="user.userName" class="form-control" placeholder="Username"
+                        pattern="^[a-zA-Z0-9]+$" maxlength="20"
+                        [ngClass]="{'is-invalid': user.userName == '', 'is-valid': user.userName!= '' }" required/>
               </div>
               <div class="col-sm-12 bottom-padding">
-                <input type="password" #password name="passw" ngModel class="form-control" placeholder="Password" />
+                <input type="password" #password name="passw" [(ngModel)]="user.password" class="form-control" placeholder="Password"
+                       [ngClass]="{'is-invalid': user.password == '', 'is-valid': user.password!= '' }" required />
               </div>
               <div class="col-sm-12">
                 <div class="row">
                   <div class="col-sm-3"></div>
 
                   <div class="col-sm-3">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary"  [disabled]="user.userName == '' || user.password == ''">Login</button>
                   </div>
                   <div class="col-sm-3">
-                    <button type="button" class="btn btn-warning" (click)="NavigatesignUp()">SignUp</button>
+                    <button type="button" class="btn btn-warning"
+                            (click)="NavigatesignUp()">SignUp</button>
                   </div>
                   <div class="col-sm-3"></div>
                 </div>

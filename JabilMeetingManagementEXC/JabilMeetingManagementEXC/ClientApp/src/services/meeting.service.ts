@@ -23,7 +23,6 @@ export class MeetingService {
   }
 
   addNewMeeting(meeting: Meeting): Observable<any> {
-    debugger;
     return this.http.post<Meeting>(environment.baseApiUrl + '/Meeting/add-meeting', meeting, this.httpOptions);
   }
 

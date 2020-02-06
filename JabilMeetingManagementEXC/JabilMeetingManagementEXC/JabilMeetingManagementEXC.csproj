@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\guards\auth-interceptor.ts" />
     <None Remove="ClientApp\src\interface\attendee.ts" />
     <None Remove="ClientApp\src\interface\meeting.ts" />
     <None Remove="ClientApp\src\interface\user.ts" />
@@ -36,6 +37,7 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\views\meeting\create-meeting\" />
+    <Folder Include="ClientApp\src\views\shared-layout\" />
     <Folder Include="ClientApp\src\views\user\" />
   </ItemGroup>
 
@@ -44,6 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\guards\auth-interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\interface\attendee.ts" />
     <TypeScriptCompile Include="ClientApp\src\interface\meeting.ts" />
     <TypeScriptCompile Include="ClientApp\src\interface\user.ts" />
