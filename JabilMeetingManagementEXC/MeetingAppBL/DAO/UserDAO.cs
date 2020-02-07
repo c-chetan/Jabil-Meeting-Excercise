@@ -65,6 +65,7 @@ namespace MeetingAppBL.DAO
                 {
 
 
+
                     var user = _mapper.Map<User>(userVM);
 
                     var addUser = dBContext.Users.Add(user);

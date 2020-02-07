@@ -8,10 +8,12 @@ import { DefaultLayoutModule } from '../shared-layout/default-layout.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginModule } from '../login/login.module';
 
+
 //Import Components
 import { AppComponent } from './app.component';
 
 import { AuthInterceptor } from 'src/guards/auth-interceptor';
+import { AuthGuard } from 'src/guards/auth-guard';
 
 
 @NgModule({
@@ -27,6 +29,7 @@ import { AuthInterceptor } from 'src/guards/auth-interceptor';
     LoginModule
   ],
   providers: [
+    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

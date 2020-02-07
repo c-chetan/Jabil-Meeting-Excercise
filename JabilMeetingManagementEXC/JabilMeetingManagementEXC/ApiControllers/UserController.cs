@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace JabilMeetingManagementEXC.ApiControllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
@@ -24,6 +24,7 @@ namespace JabilMeetingManagementEXC.ApiControllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet("{userId}")]
         public IActionResult GetUserDetails(int userId)
         {
@@ -47,8 +48,8 @@ namespace JabilMeetingManagementEXC.ApiControllers
                 return BadRequest();
             }
         }
-        
 
+        [Authorize]
         [HttpGet]
         [Route("users")]
         public IActionResult GetUsers()
@@ -68,7 +69,7 @@ namespace JabilMeetingManagementEXC.ApiControllers
 
             return Ok(new JsonResult(users));
         }
-
+        [Authorize]
         [HttpPost]
         [Route("add-user")]
         public IActionResult AddUser([FromBody]UserVM userVM)

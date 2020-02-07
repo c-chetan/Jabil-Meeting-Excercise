@@ -2,6 +2,7 @@ import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from '../../views/login/login.component';
 import { DefaultLayoutComponent } from '../shared-layout/default-layout.component';
+import { AuthGuard } from 'src/guards/auth-guard';
 
 const routes: Routes = [
   {
@@ -10,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'meetings/meetings-list',
     pathMatch: 'full'
   },
   {
@@ -29,7 +30,8 @@ const routes: Routes = [
         path: 'edit-meeting',
         loadChildren: () => import('../meeting/edit-meeting/edit-meeting.module').then(m => m.EditMeetingModule)
       }
-    ]
+    ],
+    canActivate: [AuthGuard]
   },
   {
     path: 'user',

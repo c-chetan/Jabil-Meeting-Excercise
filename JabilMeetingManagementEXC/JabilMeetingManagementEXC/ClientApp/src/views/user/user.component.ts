@@ -12,6 +12,8 @@ export class UserComponent implements OnInit {
 
   user: User;
   addUser$: any;
+  tempConfirmPassword: string = '';
+
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
@@ -35,11 +37,9 @@ export class UserComponent implements OnInit {
     if (this.user && this.user.userName != '' && this.user.password != '') {
       this.addUser$ = this.userService.signupUser(this.user).subscribe(response => {
         if (response) {
-          console.log(response);
           this.router.navigate(['login']);
         }
-      })
+      });
     }
-    debugger;
   }
 }

@@ -14,6 +14,8 @@ export class EditMeetingComponent implements OnInit {
   meetingToEditId: number;
   meetingToEdit: Meeting;
   existingUsers: User[];
+  getIdFromRoute$: any;
+  getMeeting$: any;
   maskedMeetingDate: string;
   constructor(private activatedRoute: ActivatedRoute, private meetingService: MeetingService) { }
 
@@ -28,8 +30,7 @@ export class EditMeetingComponent implements OnInit {
     }
     this.existingUsers = [];
     //this.meetingToEditId = parseInt(this.activatedRoute.params.value.id);
-    var getIdFromRoute = this.activatedRoute.params.subscribe(response => {
-      console.log(response);
+    this.getIdFromRoute$ = this.activatedRoute.params.subscribe(response => {
       this.meetingToEditId = parseInt(response.id);
       this.getMeeting(this.meetingToEditId);
     });
@@ -38,16 +39,11 @@ export class EditMeetingComponent implements OnInit {
   getMeeting(meetingId) {
 
     if (meetingId && meetingId > 0) {
-      var getMeeting$ = this.meetingService.getMeeting(meetingId).subscribe(response => {
+      this.getMeeting$ = this.meetingService.getMeeting(meetingId).subscribe(response => {
         if (response) {
           this.meetingToEdit = response.value;
           this.meetingToEdit.date = new Date(response.value.date);
           this.existingUsers = response.value.attendees.map(x => x.user);
-          //let day = meetingDate.getDate();
-          //let month = meetingDate.getMonth() + 1;
-          //let year = meetingDate.getFullYear();
-          //this.maskedMeetingDate = day + '/' + month + '/' + 'year';
-
         }
       });
     }

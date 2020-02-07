@@ -1,67 +1,163 @@
-<div class="container">
-  <div class="card">
-    <div class="card-header">
-      <div class="col-sm-12">
-        <div class="row">
-          <div class="col-sm-10">
-            <strong>Meetings</strong>
+<p-toast key="meetingsLoadedSuccess" position="top-right"></p-toast>
+<p-toast key="attendeeMeetingsAlert" position="center" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div style="text-align: center">
+      <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+      <h3>{{message.summary}}</h3>
+    </div>
+  </ng-template>
+</p-toast>
+
+
+<!--<p-toast position="top-left" key="delMeetingConfirmToast" [modal]="true" [baseZIndex]="5000">
+  (onClose)="onReject()"
+<ng-template let-meetingId pTemplate="meeting">
+  <div style="text-align: center">
+    <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-6">
+      <button type="button" pButton (click)="deleteMeeting(meetingId)" label="Yes" class="ui-button-success"></button>
+    </div>
+    <div class="ui-g-6">
+      <button type="button" pButton label="No" class="ui-button-secondary"></button>
+      <!--(click)="onReject()"
+            </div>
           </div>
-          <div class="col-sm-2 move-right">
-            <button type="button" class="btn btn-info btn-circle btn-circle-sm m-1"
-                    (click)="navigateToAddMeeting()"
-                    data-toggle="tooltip" data-placement="top" title="Add New Meeting"><i class="pi pi-plus"></i></button>
+        </ng-template>
+      </p-toast>-->
+
+      <div class="container">
+        <div class="card">
+          <div class="card-header">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-10">
+                  <strong>Meetings</strong>
+                </div>
+                <div class="col-sm-2 move-right">
+                  <button type="button" class="btn btn-info btn-circle btn-circle-sm m-1"
+                          (click)="navigateToAddMeeting()"
+                          data-toggle="tooltip" data-placement="top" title="Add New Meeting">
+                    <i class="pi pi-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="col-sm-12">
+              <p-table #dtMeetings class="table table-striped table-hover table-responsive" [responsive]="true"
+                       [value]="userMeetings">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>
+                      Subject
+                    </th>
+                    <th>
+                      Attendees
+                    </th>
+                    <th>
+                      Agenda
+                    </th>
+                    <th>
+                      Meeting Venue
+                    </th>
+                    <th>
+                      Organized By
+                    </th>
+                    <th>
+                      Actions
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-meeting let-i="rowIndex">
+                  <tr>
+                    <td (click)="showMeetingDetails(meeting,i)" [class.active]="i == selectedRow">{{meeting.Subject}}</td>
+                    <td>{{meeting.AttendeesNames}}</td>
+                    <td>{{meeting.Agenda}}</td>
+                    <!--<td>{{meeting.MeetingDate | date: 'MM-dd-yyyy'}}</td>-->
+                    <td>{{meeting.MeetingDate + 'Z' | date: 'short'}}</td>
+                    <td>{{meeting.CreatedBy}}</td>
+                    <td>
+                      <div *ngIf="meeting.CreatedBy == loggedInUserDisplayname">
+                        <a (click)="editUser(meeting.MeetingId)">
+                          <i class="pi pi-pencil"></i>
+                        </a>
+                        <a>
+
+                          <i class="pi pi-trash" (click)="openConfirmationToast(meeting.MeetingId)"> </i>
+                          <!--<i class="pi pi-trash" (click)="deleteMeeting(meeting.MeetingId)"></i>-->
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12" *ngIf="showMeetingDetailsCard">
+          <div class="row">
+            <div class="card meeting-details-card">
+              <div class="card-header">
+                <div class="col-sm-12">
+                  <div class="row">
+                    <div class="col-sm-10">
+                      <strong>Meeting Details</strong>
+                    </div>
+                    <div class="col-sm-2 move-right">
+                      <a (click)="closeMeetingDetailsCard()">
+                        <i class="pi pi-times"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="card-body">
+                  <form>
+                    <div class="col-sm-12 bottom-padding">
+                      <div class="row">
+                        <div class="col-sm-2">
+                          <label for="meetingSubject">Subject&nbsp;<span style="color:red">&#42;</span></label>
+                        </div>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" [(ngModel)]="meetingDetails.subject" name="meetingSubject" [ngModelOptions]="{standalone: true}" readonly />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 bottom-padding">
+                      <div class="row">
+                        <div class="col-sm-2">
+                          <label> Attendes&nbsp;<span style="color:red">&#42;</span></label>
+                        </div>
+                        <div class="col-sm-10">
+                          <textarea class="form-control" name="attendeesNames" readonly>{{meetingDetails.attendeesNames}}</textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 bottom-padding">
+                      <div class="row">
+                        <div class="col-sm-2">
+                          <label> Agenda&nbsp;<span style="color:red">&#42;</span></label>
+                        </div>
+                        <div class="col-sm-10">
+                          <textarea class="form-control" name="agendaText" placeholder="Agenda of Meeting" readonly>{{meetingDetails.agenda}}</textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 bottom-padding">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <p>Date: {{meetingDetails.date + 'Z' | date: 'short'}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="card-body">
-      <div class="col-sm-12">
-        <p-table #dtMeetings class="table table-striped table-hover table-responsive" [responsive]="true"
-                 [value]="userMeetings">
-          <ng-template pTemplate="header">
-            <tr>
-              <th>
-                Subject
-              </th>
-              <th>
-                Attendees
-              </th>
-              <th>
-                Agenda
-              </th>
-              <th>
-                Meeting Venue
-              </th>
-              <th>
-                Organized By
-              </th>
-              <th>
-                Actions
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-meeting>
-            <tr>
-              <td>{{meeting.Subject}}</td>
-              <td>{{meeting.AttendeesNames}}</td>
-              <td>{{meeting.Agenda}}</td>
-              <!--<td>{{meeting.MeetingDate | date: 'MM-dd-yyyy'}}</td>-->
-              <td>{{meeting.MeetingDate | date: 'short'}}</td>
-              <td>{{meeting.CreatedBy}}</td>
-              <td>
-                <div *ngIf="meeting.CreatedBy == loggedInUserDisplayname">
-                  <a (click)="editUser(meeting.MeetingId)">
-                    <i class="pi pi-pencil"></i>
-                  </a>
-                  <a>
-                    <i class="pi pi-trash" (click)="deleteMeeting(meeting.MeetingId)"></i>
-                  </a>
-                </div>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-    </div>
-  </div>
-</div>

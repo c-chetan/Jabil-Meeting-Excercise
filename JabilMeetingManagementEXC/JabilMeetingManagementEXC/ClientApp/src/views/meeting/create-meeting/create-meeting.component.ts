@@ -4,11 +4,14 @@ import { User } from '../../../interface/user';
 import { MeetingService } from '../../../services/meeting.service';
 import { UserService } from 'src/services/user.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { error } from 'util';
 
 @Component({
   selector: 'app-create-meeting',
   templateUrl: './create-meeting.component.html',
-  styleUrls: ['./create-meeting.component.scss']
+  styleUrls: ['./create-meeting.component.scss'],
+  providers: [MessageService]
 })
 export class CreateMeetingComponent implements OnInit {
 
@@ -27,9 +30,13 @@ export class CreateMeetingComponent implements OnInit {
   @Input() selectedAttendees = [];
   settings = {};
   minimumDate = new Date();
-  @ViewChild('selectedAttendeesTA', { static: false }) selectedAttendeesEl: ElementRef;
+  //@ViewChild('selectedAttendeesTA', { static: false }) selectedAttendeesEl: ElementRef;
 
-  constructor(private meetingService: MeetingService, private userService: UserService, private router: Router) { }
+  constructor(private meetingService: MeetingService,
+              private userService: UserService,
+              private router: Router,
+              private messageService: MessageService
+  ) { }
 
   ngOnInit() {
     this.currentUserId = JSON.parse(localStorage.getItem('currentUserId'));
@@ -49,31 +56,33 @@ export class CreateMeetingComponent implements OnInit {
   }
 
   saveMeeting() {
-    debugger;
-    //this.meeting.date = 
+     
     if (this.meeting && this.meeting.attendees.length > 1) {
-      //JSON.stringify(this.meeting.date);
-      var addMeeting$ = this.meetingService.addNewMeeting(this.meeting).subscribe(response => {
-        if (response && response.value > 0) {
-          debugger;
-          console.log(response);
-          this.router.navigate(['meetings/meetings-list']);
-        }
-      });
+      if (this.meeting.subject != '' && this.meeting.agenda != '') {
+        JSON.stringify(this.meeting.date)
+        var addMeeting$ = this.meetingService.addNewMeeting(this.meeting).subscribe(response => {
+          if (response && response.value > 0) {
+            this.router.navigate(['meetings/meetings-list']);
+          }
+        });
+      }
+      else {
+        this.messageService.add({ severity: 'error', summary: 'Meeting requires a Subject & Agenda.' });
+      }
     }
     else {
-      console.log(this.meeting);
+      this.messageService.add({ severity: 'error', summary: 'No Attendees Selected.' });
     }
   }
 
-  onItemSelect(item: any) {
+  onAttendeeSelect(item: any) {
     this.meeting.attendees = [];
     if (this.selectedAttendees && this.selectedAttendees.length > 0) {
       this.meeting.attendees = this.selectedAttendees;
     }
   }
 
-  OnItemDeSelect(item: any) {
+  OnAttendeeDeSelect(item: any) {
     this.meeting.attendees = [];
     this.meeting.attendees = this.selectedAttendees;
   }

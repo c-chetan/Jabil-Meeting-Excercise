@@ -5,7 +5,7 @@ import { CreateMeetingComponent } from './create-meeting.component';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-
+import { ToastModule } from 'primeng/toast';
 
 
 @NgModule({
@@ -16,6 +16,7 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
     CommonModule,
     FormsModule,
     CalendarModule,
+    ToastModule,
     AngularMultiSelectModule,
     CreateMeetingRoutingModule
   ],

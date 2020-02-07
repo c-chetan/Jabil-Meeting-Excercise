@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
     password: '',
     userToken: ''
   };
+  hideloginErrorLabel: boolean = false;
   authenticatedUser: boolean = true;
   authenticateUser$: any;
 
@@ -32,7 +33,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(user: any) {
-    debugger;
     if (user.usrName != '' && user.passw != '' && user.usrName != undefined && user.passw != undefined) {
       this.user.userName = user.usrName;
       this.user.password = user.passw;
@@ -44,9 +44,8 @@ export class LoginComponent implements OnInit {
           JSON.stringify(localStorage.setItem('jwtToken', response.value.userToken));
         }
         else {
-          debugger;
-          console.log(response);
-          this.messageService.add({ severity: 'error', summary: 'Invalid Credentials.' });
+          this.hideloginErrorLabel = true;
+          //this.messageService.add({ severity: 'error', summary: 'Invalid Credentials.' });
         }
       });
     }
@@ -54,7 +53,9 @@ export class LoginComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'Username or Password not Entered.' });
     }
   }
-
+  passwordInputKeyEvent() {
+    this.hideloginErrorLabel = false;
+  }
   NavigatesignUp() {
     this.router.navigate(['user']);
   }

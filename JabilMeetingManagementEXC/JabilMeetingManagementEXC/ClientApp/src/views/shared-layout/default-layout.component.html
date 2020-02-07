@@ -1,16 +1,21 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <div class="col-sm-12">
+      <div class="col-sm-12 navbar-fields">
         <div class="row">
           <div class="col-sm-8">
             <h4><a class="navbar-brand" href="#">CTech Solutions</a></h4>
           </div>
           <div class="col-sm-2">
-            <p class="navbar-text">Welcome, {{loggedInUser}}</p>
+            <p class="navbar-text">
+              <span><i class="pi pi-user"></i></span>
+              Welcome, {{loggedInUser}}
+            </p>
           </div>
           <div class="col-sm-2">
-            <a href="" (click)="logOutUser()">Log Out</a>
+            <a href="" (click)="logOutUser()">
+              <span style="color:white"><i class="pi pi-power-off"></i></span>
+            </a>
           </div>
         </div>
       </div>
