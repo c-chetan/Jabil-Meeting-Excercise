@@ -18,11 +18,14 @@ namespace MeetingAppDataLayer.Models
 
         [ForeignKey("UserId")]
         public User User { get; set; }
+
         public int UserId { get; set; }
 
 
         [ForeignKey("MeetingId")]
         public Meeting Meeting { get; set; }
+
         public int MeetingId { get; set; }
+        
     }
 }

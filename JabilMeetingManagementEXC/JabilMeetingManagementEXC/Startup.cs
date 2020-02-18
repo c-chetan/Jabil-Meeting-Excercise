@@ -41,11 +41,7 @@ namespace JabilMeetingManagementEXC
                 {
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    //ValidateLifetime = true,
-                    //ValidateIssuerSigningKey = true,
-
-                    //ValidIssuer = settings.HostUrl,
-                    //ValidAudience = settings.HostUrl,
+                    
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecurityKey))
 
                 };

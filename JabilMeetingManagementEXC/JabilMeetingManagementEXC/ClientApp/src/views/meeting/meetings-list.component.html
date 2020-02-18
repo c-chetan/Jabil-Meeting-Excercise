@@ -9,23 +9,23 @@
 </p-toast>
 
 
-<!--<p-toast position="top-left" key="delMeetingConfirmToast" [modal]="true" [baseZIndex]="5000">
-  (onClose)="onReject()"
+<p-toast position="center" key="delMeetingConfirmToast" [modal]="true" [baseZIndex]="5000">
 <ng-template let-meetingId pTemplate="meeting">
   <div style="text-align: center">
     <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
   </div>
+  <div>
+    <p>
+      Are you sure you want to delete?
+    </p>
+  </div>
   <div class="ui-g ui-fluid">
-    <div class="ui-g-6">
-      <button type="button" pButton (click)="deleteMeeting(meetingId)" label="Yes" class="ui-button-success"></button>
+    <div class="col-sm-12">
+      <button type="button" pButton (click)="deleteMeeting(meetingId)" label="Yes" class="btn btn-success">Yes</button>
     </div>
-    <div class="ui-g-6">
-      <button type="button" pButton label="No" class="ui-button-secondary"></button>
-      <!--(click)="onReject()"
-            </div>
           </div>
         </ng-template>
-      </p-toast>-->
+      </p-toast>
 
       <div class="container">
         <div class="card">

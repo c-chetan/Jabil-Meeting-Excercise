@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using MeetingAppBL.ViewModel;
 using MeetingAppDataLayer.DBContext;
 using MeetingAppDataLayer.Models;
@@ -13,7 +14,7 @@ namespace MeetingAppBL.DAO
     {
         private readonly AppSettings appSettings;
         private readonly IMapper _mapper;
-        
+
         public UserDAO(IMapper mapper)
         {
             appSettings = new AppSettings();
@@ -25,12 +26,13 @@ namespace MeetingAppBL.DAO
             using (MeetDBContext dBContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
             {
                 var users = dBContext.Users
-                                .Select(u => new UserVM {
+                                .Select(u => new UserVM
+                                {
                                     UserId = u.UserId,
                                     UserName = u.UserName,
                                     DisplayName = u.DisplayName
                                 })
-                                .Where(u => u.UserId!=loggedInUserId)
+                                .Where(u => u.UserId != loggedInUserId)
                                 .ToList();
 
                 //List<UserVM> usersList = _mapper.Map<List<User>,List<UserVM>>(users);
@@ -41,12 +43,11 @@ namespace MeetingAppBL.DAO
 
         public UserVM GetUser(int userId)
         {
-            if(userId!= 0)
+            if (userId != 0)
             {
                 using (MeetDBContext dBContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
                 {
                     var user = dBContext.Users.Find(userId);
-
                     var userVM = _mapper.Map<UserVM>(user);
                     return userVM;
                 }
@@ -59,7 +60,7 @@ namespace MeetingAppBL.DAO
 
         public int AddUser(UserVM userVM)
         {
-            if(userVM!=null && userVM.UserId == 0)
+            if (userVM != null && userVM.UserId == 0)
             {
                 using (MeetDBContext dBContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
                 {
@@ -83,5 +84,6 @@ namespace MeetingAppBL.DAO
                 return 0;
             }
         }
+
     }
 }

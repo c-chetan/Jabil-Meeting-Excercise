@@ -62,19 +62,23 @@ export class MeetingsListComponent implements OnInit {
     this.router.navigate(['meetings/edit-meeting/' + meetingId]);
   }
 
-  //openConfirmationToast(meetingId: number) {
-  //  debugger;
-  //  this.messageService.add({ severity: 'error', key: 'delMeetingConfirmToast', data: meetingId });
-  //}
+  openConfirmationToast(meetingId: number) {
+    this.messageService.add({ severity: 'error', key: 'delMeetingConfirmToast', data: meetingId });
+  }
 
-  deleteMeeting(meetingId: number) {
-    debugger;
-    this.deleteMeeting$ = this.meetingService.removeMeeting(meetingId).subscribe(response => {
-      if (response) {
-        window.location.reload();
-        this.messageService.add({ severity: 'success', summary: 'Meeting Deleted Successfully.' });
-      }
-    });
+  deleteMeeting(meetingData: any) {
+    let meetingId = parseInt(meetingData.data);
+    if (meetingId != 0) {
+      this.deleteMeeting$ = this.meetingService.removeMeeting(meetingId).subscribe(response => {
+        if (response) {
+          this.messageService.add({ severity: 'success', summary: 'Meeting Deleted Successfully.' });
+          window.location.reload();
+        }
+      });
+    }
+    else {
+      this.messageService.add({ severity: 'error', summary: 'No Meeting to delete' });
+    }
   }
 
   showMeetingDetails(meeting: any, index: number) {

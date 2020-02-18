@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using MeetingAppBL.DAO;
@@ -28,7 +27,7 @@ namespace JabilMeetingManagementEXC.ApiControllers
         [HttpGet("{userId}")]
         public IActionResult GetUserDetails(int userId)
         {
-            if(userId!=0)
+            if (userId != 0)
             {
                 UserDAO userDao = new UserDAO(_mapper);
 
@@ -41,7 +40,7 @@ namespace JabilMeetingManagementEXC.ApiControllers
                     UserCode = userVM.UserCode
                 };
 
-                return  Ok(new JsonResult(userDetails));
+                return Ok(new JsonResult(userDetails));
             }
             else
             {
@@ -69,6 +68,7 @@ namespace JabilMeetingManagementEXC.ApiControllers
 
             return Ok(new JsonResult(users));
         }
+
         [Authorize]
         [HttpPost]
         [Route("add-user")]
@@ -76,13 +76,13 @@ namespace JabilMeetingManagementEXC.ApiControllers
         {
             IMapper mappr = _mapper;
 
-            if(userVM!=null)
-            { 
+            if (userVM != null)
+            {
                 UserDAO userDAO = new UserDAO(mappr);
 
                 int userId = userDAO.AddUser(userVM);
 
-                if(userId!=0)
+                if (userId != 0)
                 {
                     return Ok(new JsonResult(userId));
                 }

@@ -21,7 +21,7 @@ export class DefaultLayoutComponent implements OnInit {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('currentUserDisplayName');
     localStorage.removeItem('currentUserId');
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
 
 }

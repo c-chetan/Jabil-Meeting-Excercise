@@ -71,24 +71,27 @@ namespace MeetingAppBL.DAO
             {
                 using (MeetDBContext dBContext = new MeetDBContext(MeetDBContext.optionsBld.dbOptions))
                 {
+                    using (var transaction = dBContext.Database.BeginTransaction())
+                    { 
 
-                    var meeting = _mapper.Map<Meeting>(meetingVM);
-                    dBContext.Meetings.Add(meeting);
-                    dBContext.SaveChanges();
+                        var meeting = _mapper.Map<Meeting>(meetingVM);
+                        dBContext.Meetings.Add(meeting);
+                        dBContext.SaveChanges();
 
-                    var addedMeetingDetails = dBContext.Meetings.Where(m => m.Subject == meeting.Subject).First();
-                    int newAddedMeetingId = addedMeetingDetails.MeetingId;
+                        var addedMeetingDetails = dBContext.Meetings.Where(m => m.Subject == meeting.Subject).First();
+                        int newAddedMeetingId = addedMeetingDetails.MeetingId;
 
-                    dBContext.Attendees.Add(new Attendee
-                    {
-                        AttendeeId = 0,
-                        UserId = meetingOwnerUserId,
-                        MeetingId = newAddedMeetingId,
-                        IsMeetingOwner = true,
-                    });
-                    dBContext.SaveChanges();
-
-                    return newAddedMeetingId;
+                        dBContext.Attendees.Add(new Attendee
+                        {
+                            AttendeeId = 0,
+                            UserId = meetingOwnerUserId,
+                            MeetingId = newAddedMeetingId,
+                            IsMeetingOwner = true,
+                        });
+                        dBContext.SaveChanges();
+                        transaction.Commit();
+                        return newAddedMeetingId;
+                    }
                 }
             }
 
